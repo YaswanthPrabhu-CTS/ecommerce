@@ -1,39 +1,59 @@
 package com.project.ecommerceweb.Controller;
-
-import com.project.ecommerceweb.Service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.project.ecommerceweb.Dto.ProductRequest;
 import com.project.ecommerceweb.Entity.Product;
-import com.project.ecommerceweb.Repository.ProductRepository;
+import com.project.ecommerceweb.Service.AuthService;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+import com.project.ecommerceweb.Service.ProductService;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
+    private final ProductService productService;
 
-    private ProductRepository repo;
-
-    private ProductService productService;
-
-    @Autowired
-    public ProductController(ProductRepository repo, ProductService productService) {
-        this.repo = repo;
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
-    @PostMapping
-    public Product add(@RequestBody Product p) {
-        return repo.save(p);
-    }
+//    @PostMapping
+//    public Product addProduct(
+//            @RequestHeader("Authorization") String authorization,
+//            @Valid @RequestBody ProductRequest request
+//    ) {
+//        UserEntity user = authService.requireUser(authorization);
+//        authService.requireAdmin(user);
+//        return productService.addProduct(request);
+//    }
 
     @GetMapping
-    public List<Product> getAll() {
-        return repo.findAll();
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
     }
 
-    @GetMapping("/getProduct/{id}")
-    public Product getProductById(@PathVariable Long id){
-        return productService.getById(id);
+    @GetMapping("/{id}")
+    public Product getById(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
+
+//    @PutMapping("/{id}")
+//    public Product updateProduct(
+//            @RequestHeader("Authorization") String authorization,
+//            @PathVariable Long id,
+//            @Valid @RequestBody ProductRequest request
+//    ) {
+//        UserEntity user = authService.requireUser(authorization);
+//        authService.requireAdmin(user);
+//        return productService.updateProduct(id, request);
+//    }
+
+//    @DeleteMapping("/{id}")
+//    public String deleteProduct(@RequestHeader("Authorization") String authorization, @PathVariable Long id) {
+//        UserEntity user = authService.requireUser(authorization);
+//        authService.requireAdmin(user);
+//        productService.deleteProduct(id);
+//        return "Product deleted";
+//    }
 }
+
