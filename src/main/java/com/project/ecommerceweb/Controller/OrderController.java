@@ -3,7 +3,7 @@ package com.project.ecommerceweb.Controller;
 import com.project.ecommerceweb.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.project.ecommerceweb.Entity.Order;
+import com.project.ecommerceweb.Entity.Orders;
 import java.time.LocalDateTime;
 
 @RestController
@@ -14,7 +14,7 @@ public class OrderController {
     private OrderRepository repo;
 
     @PostMapping("/place")
-    public Order placeOrder(@RequestBody Order order) {
+    public Orders placeOrder(@RequestBody Orders order) {
         order.setStatus("PLACED");
         order.setOrderDate(LocalDateTime.now());
         return repo.save(order);

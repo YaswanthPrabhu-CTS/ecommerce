@@ -1,9 +1,9 @@
 package com.project.ecommerceweb.Controller;
 
+import com.project.ecommerceweb.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.project.ecommerceweb.Entity.Cart;
-import com.project.ecommerceweb.Repository.CartRepository;
 import java.util.List;
 
 @RestController
@@ -11,15 +11,16 @@ import java.util.List;
 public class CartController {
 
     @Autowired
-    private CartRepository repo;
+    private CartService cartService;
 
     @PostMapping("/add")
     public Cart add(@RequestBody Cart item) {
-        return repo.save(item);
+        return cartService.add(item);
     }
 
     @GetMapping("/{userId}")
     public List<Cart> getCart(@PathVariable Long userId) {
-        return repo.findByUserId(userId);
+
+        return cartService.getCart(userId);
     }
 }
