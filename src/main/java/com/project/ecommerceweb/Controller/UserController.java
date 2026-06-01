@@ -1,5 +1,6 @@
 package com.project.ecommerceweb.Controller;
 
+import com.project.ecommerceweb.Dto.AuthResponse;
 import org.springframework.web.bind.annotation.*;
 import com.project.ecommerceweb.Entity.User;
 import com.project.ecommerceweb.Service.UserService;
@@ -13,7 +14,7 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
+    public AuthResponse register(@RequestBody User user) {
         return service.register(user);
     }
 
