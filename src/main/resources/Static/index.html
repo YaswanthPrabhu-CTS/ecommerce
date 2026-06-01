@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopsphere</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top navbar -->
+     <header class="topbar">
+        <div class="topbar-left">
+            <span class="brand" onclick="showPage('home')">Shopsphere</span>
+            <span class="tagline">Explore Plus</span>
+        </div>
+        <div class="topbar-search">
+            <input id="searchInput" type="text" placeholder="Search for products, brands and more" oninput="handleSearch()">
+            <button class="search-btn">&#128269;</button>
+        </div>
+        <div class="topbar-right" id="guestNav">
+            <button class="nav-btn" onclick="showPage('login')">Login</button>
+            <button class="nav-btn outline" onclick="showPage('register')">Register</button>
+        </div>
+        <div class="topbar-right hidden" id="userNav">
+            <span class="nav-user" id="loggedInName">Hello, User</span>
+            <button class="nav-btn cart-btn" onclick="showPage('cart')">&#128722; Cart <span id="cartBadge" class="cart-badge hidden">0</span></button>
+            <button class="nav-btn outline" onclick="showPage('orders')">&#128230; My Orders</button>
+            <button class="nav-btn outline" onclick="logout()">Logout</button>
+        </div>
+        <div class="topbar-right hidden" id="adminNav">
+            <span class="nav-user" id="loggedInAdminName">Hello, Admin</span>
+            <button class="nav-btn" onclick="showPage('admin')">Manage Products</button>
+            <!-- Admin Orders button -->
+            <button class="nav-btn outline" onclick="document.getElementById('adminOrdersList').scrollIntoView({behavior:'smooth'})">&#128230; Orders</button>
+            <button class="nav-btn outline" onclick="logout()">Logout</button>
+        </div>
+     </header>
+
+     <!-- CategoryBar -->
+      <div class="category-bar" id="categoryBar"></div>
+
+      <!-- Homepage -->
+       <main id="homePage" class="page active">
+            <div class="banner">
+                <div class="banner-text">
+                    <h2>Big Billion Days Sale</h2>
+                    <p>Up to 80% off on top brands - Limited time offer!</p>
+                    <button class="banner-cta" onclick="scrollToProducts()">Shop now</button>
+                </div>
+            </div>
+            <div class="section-title" id="productSectionTitle">Featured Products</div>
+            <div id="productGrid" class="product-grid"></div>
+       </main>
+</body>
+</html>
