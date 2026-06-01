@@ -1,6 +1,7 @@
 package com.project.ecommerceweb.Service;
 
 import com.project.ecommerceweb.Dto.AuthResponse;
+import com.project.ecommerceweb.Dto.LoginRequest;
 import com.project.ecommerceweb.Entity.User;
 import com.project.ecommerceweb.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,19 @@ public class UserService {
         return new AuthResponse(savedUser.getId(),savedUser.getName(),savedUser.getRole(),token);
     }
 
-    public User getUser(Long id) {
-        return userRepository.findById(id).orElseThrow();
+    public AuthResponse login(LoginRequest request){
+        User user= userRepository.findByEmail(request.email()).orElseThrow(()-> new RuntimeException("invalid email or passowrd"));
+
+        if(!user.getPassword().equals(request.password())){
+            throw new RuntimeException("Invalid password!!");
+        }
+
+        String token= authService.createToken(user);
+        return  new AuthResponse(user.getId(),user.getName(),user.getRole(),token);
+    }
+
+
+    public User getProfile(User user) {
+        return user;
     }
 }
