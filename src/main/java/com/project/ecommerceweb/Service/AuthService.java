@@ -1,7 +1,6 @@
 package com.project.ecommerceweb.Service;
 
 import com.project.ecommerceweb.Entity.User;
-import com.project.ecommerceweb.Exceptions.ApiException;
 import com.project.ecommerceweb.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,18 +24,24 @@ public class AuthService {
         return token;
     }
 
-    public User requireUser(String authorizationHeader) {
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            throw new ApiException("Missing or invalid Authorization header");
+    public User requireUser(String authorizationHeader){
+        if(authorizationHeader==null || !authorizationHeader.startsWith("Bearer ")){
+            throw new RuntimeException("Missing or invalid auth header...");
         }
 
-        String token = authorizationHeader.substring(7);
-        Long userId = tokens.get(token);
-        if (userId == null) {
-            throw new ApiException("Invalid or expired token");
+       String token= authorizationHeader.substring(7);
+        Long userId= tokens.get(token);
+        if(userId==null){
+            throw new RuntimeException("invalid or expired token");
         }
 
         return userRepository.findById(userId)
-                .orElseThrow(() -> new ApiException("User not found"));
+                .orElseThrow(()-> new RuntimeException("user not found"));
+    }
+
+    public void requireAdmin(User user){
+        if(!user.getRole().equals("ADMIN")){
+            throw new RuntimeException("only admins can access!!");
+        }
     }
 }

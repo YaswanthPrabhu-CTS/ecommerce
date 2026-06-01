@@ -1,12 +1,10 @@
 package com.project.ecommerceweb.Entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,15 +16,8 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    private Long userId;
-
-    @ManyToOne(optional = false)
-    private User user;
-
-    private BigDecimal totalAmount;
-    private OrderStatus status;
+    private Long userId;
+    private double totalAmount;
+    private String status;
     private LocalDateTime orderDate;
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> items = new ArrayList<>();
 }
