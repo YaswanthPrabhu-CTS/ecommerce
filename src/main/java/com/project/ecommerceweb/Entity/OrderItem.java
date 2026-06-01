@@ -2,25 +2,33 @@ package com.project.ecommerceweb.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
 @Getter
-public class Cart {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)
     @JsonIgnore
-    private User user;
+    private Orders order;
 
     @ManyToOne(optional = false)
     private Product product;
 
-    private int quantity;
+    @Column(nullable = false)
+    private Integer quantity;
 
     @Column(nullable = false)
-    private BigDecimal totalPrice;
+    private BigDecimal price;
 }

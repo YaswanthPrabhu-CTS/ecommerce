@@ -10,8 +10,13 @@ import java.util.List;
 @RequestMapping("/api/cart")
 public class CartController {
 
-    @Autowired
+
     private CartService cartService;
+
+    @Autowired
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     @PostMapping("/add")
     public Cart add(@RequestBody Cart item) {
