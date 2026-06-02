@@ -29,15 +29,8 @@ public class OrderController {
 //        return repo.save(order);
 //    }
     @PostMapping("/place")
-<<<<<<< HEAD
     public Orders placeOrder(@RequestHeader("Authorization") String authorization) {
         User user = authService.requireUser(authorization);
         return orderService.placeOrder(user);
-=======
-    public Orders placeOrder(@RequestBody Orders order) {
-        order.setStatus("PLACED");
-        order.setOrderDate(LocalDateTime.now());
-        return repo.save(order);
->>>>>>> varunchanges
     }
 }
