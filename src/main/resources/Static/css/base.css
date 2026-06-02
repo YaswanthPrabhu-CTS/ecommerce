@@ -1,0 +1,10 @@
+.page {
+    min-height: calc(100vh - 100px);
+}
+.page.active {
+    display: block;
+}
+
+.page.hidden {
+    display: none;
+}

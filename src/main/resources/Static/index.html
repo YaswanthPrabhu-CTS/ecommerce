@@ -51,5 +51,51 @@
             <div class="section-title" id="productSectionTitle">Featured Products</div>
             <div id="productGrid" class="product-grid"></div>
        </main>
+
+    <!-- PAGE: LOGIN -->
+    <main id="loginPage" class="page hidden">
+        <div class="auth-wrapper">
+            <div class="auth-promo">
+                <h2>Login</h2>
+                <p>Get access to your Orders, Wishlist and Recommendations</p>
+            </div>
+            <div class="auth-form">
+                <div class="tab-row">
+                    <button class="tab-btn active" id="tabUser" onclick="switchLoginTab('USER')">User Login</button>
+                    <button class="tab-btn" id="tabAdmin" onclick="switchLoginTab('ADMIN')">Admin Login</button>
+                </div>
+                <input id="loginEmail" type="email" placeholder="Enter Email / Mobile number">
+                <input id="loginPassword" type="password" placeholder="Enter Password">
+                <p id="loginError" class="error-text hidden"></p>
+                <button class="submit-btn" onclick="submitLogin()">Login</button>
+                <p class="auth-switch">New to ShopSphere? <a href="#" onclick="showPage('register')">Create an account</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- PAGE: REGISTER -->
+    <main id="registerPage" class="page hidden">
+        <div class="auth-wrapper">
+            <div class="auth-promo">
+                <h2>Create Account</h2>
+                <p>Join millions of happy shoppers on ShopSphere</p>
+            </div>
+            <div class="auth-form">
+                <input id="regFirstName" placeholder="First Name">
+                <input id="regLastName" placeholder="Last Name">
+                <input id="regPhone" placeholder="Phone Number">
+                <input id="regEmail" type="email" placeholder="Email">
+                <input id="regPassword" type="password" placeholder="Password">
+                <input id="regConfirmPassword" type="password" placeholder="Confirm Password">
+                <!-- CHANGED: Added address field -->
+                <textarea id="regAddress" placeholder="Delivery Address (House No, Street, City, State, PIN)" rows="2" class="auth-textarea"></textarea>
+                <p id="registerMessage" class="hidden msg-box"></p>
+                <button class="submit-btn" onclick="registerUser()">Create Account</button>
+                <p class="auth-switch">Already have an account? <a href="#" onclick="showPage('login')">Login</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
 </body>
 </html>
