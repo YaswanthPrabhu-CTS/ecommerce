@@ -5,6 +5,7 @@ import com.project.ecommerceweb.Dto.LoginRequest;
 import com.project.ecommerceweb.Entity.User;
 import com.project.ecommerceweb.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,10 +13,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final AuthService authService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, AuthService authService) {
+    public UserService(UserRepository userRepository, AuthService authService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.authService = authService;
+        this.passwordEncoder=passwordEncoder;
     }
 
     public AuthResponse register(User user) {
@@ -25,7 +28,8 @@ public class UserService {
         User user1= new User();
         user1.setName(user.getName());
         user1.setEmail(user.getEmail());
-        user1.setPassword(user.getPassword());
+//        user1.setPassword(user.getPassword());
+        user1.setPassword(passwordEncoder.encode(user.getPassword())); // for password security
         user1.setPhone(user.getPhone());
         user1.setAddress(user.getAddress());
         user1.setRole("USER");
@@ -38,9 +42,14 @@ public class UserService {
     public AuthResponse login(LoginRequest request){
         User user= userRepository.findByEmail(request.email()).orElseThrow(()-> new RuntimeException("invalid email or passowrd"));
 
-        if(!user.getPassword().equals(request.password())){
-            throw new RuntimeException("Invalid password!!");
+//        if(!user.getPassword().equals(request.password())){
+//            throw new RuntimeException("Invalid password!!");
+//        }
+
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {     // to verify the encrypted password
+            throw new RuntimeException("Invalid password!");
         }
+
 
         String token= authService.createToken(user);
         return  new AuthResponse(user.getId(),user.getName(),user.getRole(),token);
